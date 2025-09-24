@@ -62,3 +62,8 @@ In case you have multiple dev servers, look for the port number similar to "5173
 
 - the repo includes a design policy file at `/llm/policy/react.yml` which you can ask the AI agents to refer for clear outcomes
 - Feel free to make updates to this and share what works for you
+
+---
+
+> This repo is for learning, testing, and fast iteration. It’s a sandbox for creative exploration, not production code.
+> Not recommeded for simple and easy turnarounds
