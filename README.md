@@ -1,73 +1,64 @@
-# React + TypeScript + Vite
+# Design Playground
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An experimental **React + TypeScript + Vite** setup with **TailwindCSS** and **shadcn/ui** components for rapid prototyping.  
+The goal: make it easy for designers and engineers to **try interaction patterns, test ideas, and share prototypes quickly**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Features
 
-## React Compiler
+- ⚡ **Vite** – fast dev server with hot module replacement
+- 🎨 **TailwindCSS** – utility-first styling with design tokens baked in
+- 🧩 **shadcn/ui** – composable, accessible components
+- 🪝 **Zustand + localStorage** – simple state management + persistence
+- 🔍 **TypeScript + ESLint** – type safety and linting for a smoother dev experience
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🛠 Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 1. Clone the repo
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+git clone https://github.com/darshilv/design-playground.git
+cd design-playground
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Install packages
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+# or
+yarn install
 ```
+
+### 3. Run locally
+
+```bash
+npm run dev
+```
+
+Visit http://localhost:5173 in your browser.
+
+In case you have multiple dev servers, look for the port number similar to "5173" in the CLI output
+
+---
+
+## How to Use
+
+- Start by editing files in `src/` to experiment with new flows.
+- Add pages under `src/pages/` for different prototype ideas. Think of them as containers/organisms
+  - There are two examples of page types in the repo "home" and "experiment-one".
+    - home does not inherit the Rippling chrome
+    - experiment-one inherits the Rippling chrome
+    - the `src/pages/index.tsx` contains routing example that any LLM agent will be able to update for you
+- Use Zustand for any state that needs to be shared across features.
+- Persist state to `localStorage` when you want the prototype to remember between reloads.
+- Use URL params for filters, selections, or other sharable state.
+
+---
+
+## Policy
+
+- the repo includes a design policy file at `/llm/policy/react.yml` which you can ask the AI agents to refer for clear outcomes
+- Feel free to make updates to this and share what works for you
