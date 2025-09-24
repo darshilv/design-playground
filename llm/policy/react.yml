@@ -1,0 +1,91 @@
+version: 1
+domain: react_web
+name: React Policy (Prototype-first)
+last_updated: 2025-09-23
+priority: high
+
+context:
+  server_data: false # No TanStack Query yet
+  prototype_scale: "small" # Optimize for speed & simplicity first
+  persistence: "localStorage" # Light client persistence
+
+core_principles:
+  - id: simplicity-first
+    rule: "Prefer the simplest working solution; add complexity only when a real need appears."
+  - id: colocate-ui-state
+    rule: "Keep UI state close to the components that use it."
+  - id: minimal-global-state
+    rule: "Use a small global store (Zustand) only for cross-feature coordination."
+  - id: url-as-state
+    rule: "Use URL search params for shareable UI (filters, selection, pagination)."
+  - id: render-boundaries
+    rule: "Split into small components so changes don’t trigger wide re-renders."
+
+state_management:
+  when: "server_data == false"
+  choose:
+    - condition: "state_scope in ['single-component','tight subtree']"
+      answer: "local_component_state" # use useState/useReducer
+    - condition: "state_scope == 'cross-feature'"
+      answer: "zustand_global_store" # one small slice per concern
+    - condition: "state_needs_sharing_via_url == true"
+      answer: "router_search_params" # URL is the source of truth
+  persistence:
+    - condition: "should_persist_across_reload == true"
+      answer: "localStorage (hydrated via hook or zustand persist)"
+
+rendering:
+  do:
+    - "Create render boundaries (leaf components) for frequently updating parts."
+    - "Use React.memo only on hot leaves with stable props."
+    - "Avoid new object/function literals in hot JSX paths unless stabilized."
+  dont:
+    - "No mega AppContext; prefer small, focused contexts or store selectors."
+
+forms:
+  do:
+    - "Small forms: local state with controlled inputs."
+    - "Bigger forms: prefer React Hook Form with mostly uncontrolled inputs."
+  dont:
+    - "Don’t duplicate isDirty/isValid in extra state."
+
+persistence:
+  local_storage:
+    pattern: "Single key per concern, JSON-serialized."
+    schema_required: false
+    notes:
+      - "Guard against undefined data; use defaults on first load."
+      - "Version keys if shape changes (e.g., app:v2:userPrefs)."
+
+composition:
+  components:
+    - "Wrap shadcn/ui primitives as thin design-system components (forward refs, className passthrough)."
+    - "Prefer compound component pattern for internal coordination over prop drilling."
+  events:
+    - "Cross-cutting events (toasts, modals): single provider + hooks (e.g., useToast)."
+
+anti_patterns:
+  - "Global store for everything ('God store')."
+  - "Prop drilling entire objects several levels deep."
+  - "Spinner-only loading everywhere; use skeletons if needed."
+  - "Index keys in re-orderable lists."
+
+exceptions:
+  - when: "feature_complexity == 'high' and flows == 'wizard/statechart-worthy'"
+    allow: "Use XState—but only for that feature, not globally."
+  - when: "prototype_scale == 'tiny' and state_scope != 'cross-feature'"
+    allow: "Skip global store entirely; all state local; still avoid deep prop drilling."
+
+output_style:
+  - id: default
+    instruction: "Proposed solutions must state which state_scope they target and why the chosen mechanism is the simplest that works."
+
+examples:
+  - id: filterable-list
+    question: "How to handle filters and selection?"
+    answer_hint:
+      - "Put filters in URLSearchParams; selection in local state or a small Zustand slice if multiple routes depend on it."
+  - id: modal-across-pages
+    question: "Share a modal open/close across distant components?"
+    answer_hint:
+      - "Provide a modal context or small Zustand slice with selectors; do not pass open/close props through many layers."
