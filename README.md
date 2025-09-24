@@ -65,5 +65,12 @@ In case you have multiple dev servers, look for the port number similar to "5173
 
 ---
 
+## Next Steps
+
+- Add documentation for common patterns (modals, forms, list/detail).
+- Expand starter examples (permissions, dashboards, wizards).
+
+---
+
 > This repo is for learning, testing, and fast iteration. It’s a sandbox for creative exploration, not production code.
 > Not recommeded for simple and easy turnarounds
