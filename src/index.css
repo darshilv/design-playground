@@ -1,14 +1,116 @@
+/* 1) Design tokens (variables) */
+@import "./lib/theme.css";
+
+/* 2) Tailwind core (v4) */
 @import "tailwindcss";
 
+/* 3) Plugins (v4 CSS-side) */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @plugin "tailwindcss-animate";
 
+/* 4) Variants (v4 CSS-side) */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @custom-variant dark (&:is(.dark *));
 
+:root {
+  --radius: 0.625rem;
+
+  /* Light — map to your product-level aliases */
+  --background: #fafafa;
+  /* surface: gray 50 */
+  --foreground: #202022;
+  /* on surface: gray 900 */
+  --card: #ffffff;
+  /* surface bright */
+  --card-foreground: #202022;
+  --popover: #ffffff;
+  --popover-foreground: #202022;
+  --primary: #7a005d;
+  /* plum 700 */
+  --primary-foreground: #ffffff;
+  /* white */
+  --secondary: #92670a;
+  /* yellow 700 */
+  --secondary-foreground: #382600;
+  /* yellow 900 */
+  --muted: #f2f2f2;
+  /* gray 100 */
+  --muted-foreground: #6f6f72;
+  /* gray 600 */
+  --accent: #e6f2ff;
+  /* blue 50 */
+  --accent-foreground: #25395a;
+  /* blue 800 */
+  --destructive: #bb3d2a;
+  /* red 500 */
+  --input: #e3e3e3;
+  /* gray 200 */
+  --ring: #6080b8;
+  /* blue 400 */
+
+}
+
+/* Dark overrides */
+.dark {
+  --background: #202022;
+  /* gray 900 */
+  --foreground: #ffffff;
+  /* white */
+  --card: #232326;
+  --card-foreground: #ffffff;
+  --popover: #232326;
+  --popover-foreground: #ffffff;
+  --primary: #d1afbd;
+  /* plum 200 */
+  --primary-foreground: #7a005d;
+  /* plum 700/900 */
+  --secondary: #ffd77e;
+  /* yellow 200 */
+  --secondary-foreground: #000000;
+  --muted: #3e3e40;
+  /* gray 800 */
+  --muted-foreground: #c7c7ca;
+  --accent: #36507c;
+  /* blue 600 */
+  --accent-foreground: #e6f2ff;
+  /* blue 50 */
+  --destructive: #df7b6c;
+  /* red 300–400 */
+  --input: #ffffff1a;
+  /* white-a 100–200 */
+  --ring: #a5b8db;
+  /* blue 200–300 */
+
+}
+
+@layer base {
+  :root {
+    --rpl-color-surface: var(--rpl-color-surface);
+    --rpl-color-on-surface: var(--rpl-color-on-surface);
+    --rpl-color-surface-variant: var(--rpl-color-surface-container);
+    --rpl-color-outline: var(--rpl-color-outline);
+  }
+
+  .dark {
+    --rpl-color-surface: var(--rpl-color-surface-inverse);
+    --rpl-color-on-surface: var(--rpl-color-on-surface-inverse);
+  }
+
+  /* Example: set page using rpl tokens */
+  body {
+    background: var(--rpl-color-surface);
+    color: var(--rpl-color-on-surface);
+  }
+}
+
+/* v4 inline theme tokens so Tailwind utilities like bg-background work */
+/* stylelint-disable-next-line at-rule-no-unknown */
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -24,98 +126,30 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
-  --color-border: var(--border);
+  --color-border: var(--rpl-color-outline);
+  /* or your --border */
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Optional: expose rpl group */
+  --color-rpl-surface: var(--rpl-color-surface);
+  --color-rpl-on-surface: var(--rpl-color-on-surface);
+  --shadow-none: var(--effect--shadow--none);
+  --shadow-xs: var(--effect--shadow--xs);
+  --shadow-sm: var(--effect--shadow--sm);
+  --shadow-md: var(--effect--shadow--md);
+  --shadow-lg: var(--effect--shadow--lg);
+  --shadow-xl: var(--effect--shadow--xl);
+  --shadow-2xl: var(--effect--shadow--2xl);
 }
 
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
-}
-
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
-}
-
+/* Make Tailwind's border utilities use your tokenized border color */
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
+
+  /* stylelint-disable-next-line at-rule-no-unknown */
+  *,
+  ::before,
+  ::after {
+    @apply border-border;
   }
 }
