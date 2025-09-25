@@ -4,7 +4,7 @@ import AppShell from "@/components/rippling-chrome/app-shell";
 
 
 // Launchpad
-import Home from "./Home";
+import Home from "./home";
 
 import ExperimentOne from "./experiment-one";
 
